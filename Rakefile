@@ -5,13 +5,15 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "array_pair"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = 'random useful methods for working with Ruby arrays, hashes and objects'
+    gem.description = 'random useful methods for working with Ruby arrays and hashes'
     gem.email = "donttrustben near gmail.com"
     gem.homepage = "http://github.com/wwood/array_pair"
     gem.authors = ["Ben J Woodcroft"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+
+    gem.add_dependency('rsruby')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
