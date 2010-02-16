@@ -25,13 +25,13 @@ class Array
     pairs = []
     
     if another_array #between this array and the next
-      (0..length-1).each do |index1|
-        (0..another_array.length-1).each do |index2|
+     (0..length-1).each do |index1|
+     (0..another_array.length-1).each do |index2|
           pairs.push [self[index1], another_array[index2]]
         end
       end       
     else # within this array only
-      (0..length-1).each do |index1|
+     (0..length-1).each do |index1|
         index2 = index1+1
         while index2 < length
           pairs.push [self[index1], self[index2]]
@@ -39,7 +39,7 @@ class Array
         end
       end      
     end
-
+    
     return pairs
   end
   
@@ -134,7 +134,7 @@ class Array
         if columns_to_normalise.nil? or columns_to_normalise.include?(index)
           minima = column_minima[index]
           maxima = column_maxima[index]
-      
+          
           if col.nil?
             new_row.push nil
           elsif minima == maxima
@@ -170,15 +170,15 @@ class Array
     return '()' if empty?
     return "('#{join("','")}')"
   end
-
+  
   # For SQL conditions. In [] brackets, single quotes don't work.
   # ['a','bc'] => "(a,bc)"
   def to_sql_in_string_no_quotes
     return '()' if empty?
     return "(#{join(",")})"
   end
-
-
+  
+  
   def median
     return nil unless length>0
     a = sort
@@ -188,12 +188,12 @@ class Array
       return a[length/2]
     end
   end
-
+  
   def standard_deviation
     return nil if empty?
     RSRuby.instance.sd(self)
   end
-
+  
   # Similar to pairs(another_array) iterator, in that you iterate over 2
   # pairs of elements. However, here only the one array (the 'this' Enumerable)
   # and the names of these are from the names
@@ -206,7 +206,21 @@ class Array
       end
     end
   end
-
+  
+  # Like each_lower_triangular_matrix, except iterate over 3 items at once, not 2.
+  # So for [1,2,3,4] you should get (in succession), 123, 124, 134, 234
+  def each_lower_triangular_3d_matrix
+    each_with_index do |e1, i1|
+      each_with_index do |e2, i2|
+        next unless i2 > i1
+        each_with_index do |e3, i3|
+          next unless i3 > i2
+          yield e1, e2, e3
+        end
+      end      
+    end
+  end
+  
   # like uniq -c for unix
   def uniq_count
     hash = {}
@@ -216,7 +230,7 @@ class Array
     end
     hash
   end
-
+  
   def no_nils
     reject do |element|
       element.nil?

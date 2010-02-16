@@ -1,7 +1,7 @@
 # 
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
- 
+
 
 $:.unshift File.join(File.dirname(__FILE__),'..','lib')
 
@@ -63,28 +63,28 @@ class ArrayPairTest < Test::Unit::TestCase
     assert_equal '()', [].to_sql_in_string
     assert_equal "('a','bc')", ['a','bc'].to_sql_in_string
   end
-
+  
   def test_median
     assert_equal nil, [].median
     assert_equal 1, [1].median
     assert_equal 1.5, [0,3,2,1].median
     assert_equal 2, [1,2,3].median
   end
-
+  
   def test_each_lower_triangle_iterator
     gained = []
     [].each_lower_triangular_matrix() { |i,j| gained.push([i,j]) }
     assert_equal [], gained
-
+    
     gained = []
     [1].each_lower_triangular_matrix() { |i,j| gained.push([i,j]) }
     assert_equal [], gained
-
+    
     gained = []
     [1,2].each_lower_triangular_matrix() { |i,j| gained.push([i,j]) }
     assert_equal [1,2], gained[0]
     assert_equal 1, gained.length
-
+    
     gained = []
     [1,2,3].each_lower_triangular_matrix() { |i,j| gained.push([i,j]) }
     assert_equal [1,2], gained[0]
@@ -92,13 +92,31 @@ class ArrayPairTest < Test::Unit::TestCase
     assert_equal [2,3], gained[2]
     assert_equal 3, gained.length
   end
-
+  
+  def test_each_lower_triangular_3d_matrix
+    gained = []
+    [].each_lower_triangular_3d_matrix { |i,j,k| gained.push([i,j,k]) }
+    assert_equal [], gained
+    
+    gained = []
+    [1,2,3].each_lower_triangular_3d_matrix { |i,j,k| gained.push([i,j,k]) }
+    assert_equal [[1,2,3]], gained
+    
+    gained = []
+    [1,2,3,4].each_lower_triangular_3d_matrix { |i,j,k| gained.push([i,j,k]) }
+    assert_equal [1,2,3], gained[0]
+    assert_equal [1,2,4], gained[1]
+    assert_equal [1,3,4], gained[2]
+    assert_equal [2,3,4], gained[3]
+    assert_equal 4, gained.length
+  end
+  
   def test_standard_deviation
     assert_nil [].standard_deviation
     assert_equal 1.0, [1,2,3].standard_deviation
     assert_equal 129, ([1,2,3,4].standard_deviation*100).round
   end
-
+  
   def test_uniq_count
     assert_equal({}, [].uniq_count)
     assert_equal({'a' => 1}, ['a'].uniq_count)
