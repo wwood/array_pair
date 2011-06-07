@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "array_pair.gemspec",
     "lib/array_pair.rb",
     "test/helper.rb",
     "test/test_array_pair.rb"
