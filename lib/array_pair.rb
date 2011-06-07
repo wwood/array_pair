@@ -221,6 +221,22 @@ class Array
     end
   end
   
+  # Like each_lower_triangular_matrix, except iterate over 4 items at once, not 2.
+  def each_lower_triangular_4d_matrix
+    each_with_index do |e1, i1|
+      each_with_index do |e2, i2|
+        next unless i2 > i1
+        each_with_index do |e3, i3|
+          next unless i3 > i2
+          each_with_index do |e4, i4|
+            next unless i4 > i3
+            yield e1, e2, e3, e4
+          end
+        end
+      end      
+    end
+  end
+  
   # like uniq -c for unix
   def uniq_count
     hash = {}

@@ -111,6 +111,25 @@ class ArrayPairTest < Test::Unit::TestCase
     assert_equal 4, gained.length
   end
   
+  def test_each_lower_triangular_4d_matrix
+    gained = []
+    [].each_lower_triangular_4d_matrix { |i,j,k,l| gained.push([i,j,k,l]) }
+    assert_equal [], gained
+    
+    gained = []
+    [1,2,3,4].each_lower_triangular_4d_matrix { |i,j,k,l| gained.push([i,j,k,l]) }
+    assert_equal [[1,2,3,4]], gained
+    
+    gained = []
+    [1,2,3,4,5].each_lower_triangular_4d_matrix { |i,j,k,l| gained.push([i,j,k,l]) }
+    assert_equal [1,2,3,4], gained[0]
+    assert_equal [1,2,3,5], gained[1]
+    assert_equal [1,2,4,5], gained[2]
+    assert_equal [1,3,4,5], gained[3]
+    assert_equal [2,3,4,5], gained[4]
+    assert_equal 5, gained.length
+  end
+  
   def test_standard_deviation
     assert_nil [].standard_deviation
     assert_equal 1.0, [1,2,3].standard_deviation
